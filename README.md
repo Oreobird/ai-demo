@@ -1,2 +1,3 @@
-人脸检测 人脸特征点提取 人脸质量评测
-
+face_quality
+face_id
+obj_detect
