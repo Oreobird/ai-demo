@@ -1,0 +1,9 @@
+/home/zgs/dlib-master/dlib/build/CMakeFiles/edit_cache.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/package_source.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/rebuild_cache.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/package.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/install/local.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/install/strip.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/list_install_components.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/dlib.dir
+/home/zgs/dlib-master/dlib/build/CMakeFiles/install.dir

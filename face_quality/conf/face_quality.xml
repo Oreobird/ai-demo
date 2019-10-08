@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<face_quality>
+
+	<system>
+		<id>Face_Quality</id>
+		<ip>127.0.0.1</ip>
+		<ip_out>10.101.70.234</ip_out>
+		<port>6666</port>
+		<thr_num>3</thr_num>
+		<max_queue_size>100000</max_queue_size>
+		<TZ>Asia/Shanghai</TZ>		
+	</system>
+</face_quality>

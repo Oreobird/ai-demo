@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>视频越界预警</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+
+    <style>
+        .img-box {
+            flex: 0 0 100%;
+            height: 480px;
+        }
+        .img-box img {
+            max-width: 100%;
+        }
+        #video,
+        #canvas2 {
+            max-width: 1000px;
+        }
+
+        #video {
+            width: 850px;
+            height:480px;
+            display: none;
+        }
+
+        #progress {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            font-size: 30px;
+            line-height: 60px;
+            color: #0098ff;
+            text-align: center;
+        }
+
+        .loadEffect{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            display: none;
+        }
+        .loadEffect span{
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0098ff;
+            position: absolute;
+            -webkit-animation: load 1.04s ease infinite;
+        }
+        @-webkit-keyframes load{
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0.2;
+            }
+        }
+        .loadEffect span:nth-child(1){
+            left: 0;
+            top: 50%;
+            margin-top:-8px;
+            -webkit-animation-delay:0.13s;
+        }
+        .loadEffect span:nth-child(2){
+            left: 14px;
+            top: 14px;
+            -webkit-animation-delay:0.26s;
+        }
+        .loadEffect span:nth-child(3){
+            left: 50%;
+            top: 0;
+            margin-left: -8px;
+            -webkit-animation-delay:0.39s;
+        }
+        .loadEffect span:nth-child(4){
+            top: 14px;
+            right:14px;
+            -webkit-animation-delay:0.52s;
+        }
+        .loadEffect span:nth-child(5){
+            right: 0;
+            top: 50%;
+            margin-top:-8px;
+            -webkit-animation-delay:0.65s;
+        }
+        .loadEffect span:nth-child(6){
+            right: 14px;
+            bottom:14px;
+            -webkit-animation-delay:0.78s;
+        }
+        .loadEffect span:nth-child(7){
+            bottom: 0;
+            left: 50%;
+            margin-left: -8px;
+            -webkit-animation-delay:0.91s;
+        }
+        .loadEffect span:nth-child(8){
+            bottom: 14px;
+            left: 14px;
+            -webkit-animation-delay:1.04s;
+        }
+    </style>
+</head>
+<body>
+<div class="face-wrap">
+    <h1>视频越界预警</h1>
+    <div class="btn-box">
+        <!-- <input class="in-txt" type="text" readonly>  style="display: none"-->
+        <input id="hiddenInput" type="file" hidden>
+        <button class="btn" id="chooseLocalFile" >选择文件</button>
+        <!--<button class="btn" id="camera">打开摄像头</button>-->
+        <button class="btn" id="cross" style="display: none;">隐藏分界线</button>
+        <button class="btn" id="confirm" style="display: none;">上  传</button>
+    </div>
+
+    <div class="view-box">
+        <div class="img-box">
+            <div class="canvas-box">
+                <div id="video"></div>
+                <!--<canvas id="canvas2" width="480" height="320"></canvas>-->
+                <canvas id="canvas2"></canvas>
+            </div>
+
+            <img id="image" src="http://10.101.70.234/img/Desert.png" alt="">
+
+            <div class="loadEffect" id="loading">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div id="progress"></div>
+        </div>
+    </div>
+</div>
+
+<div id="loadingBar"><span><strong></strong><i></i></span></div>
+</body>
+<script src="jquery-3.3.1.min.js"></script>
+<!--<script src="ajaxfileupload.js"></script>-->
+<script src="video.js"></script>
+
+</html>

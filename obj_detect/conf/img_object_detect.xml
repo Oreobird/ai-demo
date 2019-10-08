@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object_detect>
+
+	<system>
+		<id>Object_Detect</id>
+		<ip>127.0.0.1</ip>
+		<ip_out>10.101.70.234</ip_out>
+		<port>6676</port>
+		<thr_num>3</thr_num>
+		<max_queue_size>100000</max_queue_size>
+		<TZ>Asia/Shanghai</TZ>		
+	</system>
+	
+	<camera>
+		<id></id>
+		<line></line>
+	</camera>
+</object_detect>

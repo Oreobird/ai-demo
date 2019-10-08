@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人脸识别测评系统</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <script src="./jquery-3.3.1.min.js"></script>
+    <script src="./exif.js"></script>
+</head>
+<body>
+    <div class="face-wrap">
+        <h1>人脸识别测评系统</h1>
+        <div class="btn-box">
+            <!-- <input class="in-txt" type="text" readonly> -->
+            <input id="hiddenInput" type="file" style="display: none">
+            <select name="algorithm" class="select" id="algorithm" style="display: none">
+                <option value="0">选择算法</option>
+                <option value="0">Dlib</option>
+                <option value="1">SDM</option>
+                <option value="2">SeetaFace</option>
+            </select>
+            <button class="btn" id="chooseLocalFile" >选择文件</button>
+            <button class="btn" id="camera" style="display: none">打开摄像头</button>
+            <!-- <button class="btn">上  传</button> -->
+        </div>
+
+        <div class="view-box">
+            <div class="img-box">
+                <div id="video-box" style="display: none">
+                    <video style="width: 480px;height: 320px;" id="video"></video>
+                    <div class="capture-btn-box">
+                        <button class="btn" id="capture">拍  照</button>
+                    </div>
+                </div>
+                <canvas id="canvas" style="display: none" width="480" height="320"></canvas>
+                <img id="image" src="http://10.101.70.234/img/Desert.png" alt="">
+            </div>
+            <div class="txt-box" id="hint" style="display:none">
+                <!-- <h2>图片质量</h2>
+                <p><span>角度：</span>0.980</p>
+                <p><span>清晰度：</span>0.957</p>
+                <p><span>对比度：</span>0.883</p>
+                <p><span>位置：</span>0.878</p>
+                <p><span>大小：</span>0.042</p>
+                <p><span>明亮度：</span>0.954</p>
+                <p class="fb"><span>总分：</span>67.045</p>
+                <p class="result">
+                    <span>结论：</span>
+                    <strong class="red">图片不合格</strong>
+                    <strong class="green">图片合格</strong>
+                </p> -->
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

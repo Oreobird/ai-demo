@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7556cd34-ff3b-4f54-93e7-bb16bb190bc6" name="星络阿里云" url="http://120.79.113.69:81/face/">
+        <fileTransfer host="120.79.113.69" port="51000" rootFolder="/data/html/face" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="51000" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

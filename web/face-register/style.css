@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {outline: none;}
+
+div {
+    box-sizing: border-box;
+}
+
+em {
+    font-style: normal;
+}
+
+.face-wrap {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+.face-wrap h1 {
+    margin-bottom: 40px;
+    font-size: 24px;
+    text-align: center;
+    color: #0098ff;
+}
+
+.btn-box {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.btn-box .btn,
+.capture-btn-box .btn {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #0098ff;
+    background-color: rgba(0,152,255,.08);
+    font-size: 14px;
+    line-height: 28px;
+    margin-right: 20px;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: button;
+    color: #000;
+}
+
+.btn-box .btn:disabled {
+    border-color: #ccc;
+    color: #999;
+    background-color: #fff;
+    cursor:not-allowed;
+}
+
+.btn-box .name {
+    width: 180px;
+    height: 28px;
+    border: 1px solid #0098ff;
+    font-size: 14px;
+    line-height: 28px;
+    padding: 0 6px;
+    margin-right:10px;
+}
+
+.select{
+    width: 80px;
+    height: 30px;
+    border: 1px solid #0098ff;
+    background-color: rgba(0,152,255,.08);
+    font-size: 14px;
+    line-height: 28px;
+    margin-right: 20px;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+}
+
+.view-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 70%;
+    background-color: #f5f5f5;
+}
+
+.img-box img {
+    display: block;
+    max-width: 700px;
+}
+
+.txt-box {
+    flex: 0 0 26%;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 28px;
+    border: 1px solid rgba(0,152,255,.5);
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,152,255,.5);font-weight: bold;
+}
+
+.txt-box h2 {
+    font-size: 16px;
+    line-height: 26px;
+    /*color: #0098ff;*/
+    color: rgba(0,152,255,.8);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.txt-box span {
+    display: inline-block;
+    min-width: 72px;
+    text-align: right;
+    color: #444;
+    font-weight: normal;
+}
+
+.txt-box .fb {
+    font-weight: bold;
+}
+
+.txt-box .fright{
+    float: right;
+}
+
+.txt-box .result {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.txt-box .red {
+    color: #f40;
+}
+
+.txt-box .green {
+    color: green;
+}
+
+
+#video {
+    margin: 0 auto;
+}
+
+.capture-btn-box {
+    padding: 10px 0 20px;
+    text-align: center;
+}
+#canvas{
+    max-width: 700px;
+}

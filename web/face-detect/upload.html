@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            人脸识别demo
+        </title>
+        <style type="text/css">
+		.wrap{
+			display: inline-block;
+			position: relative;
+			box-shadow: 0 0 4px #C79F5A;
+
+			span{
+				display: inline-block;
+			}
+		}
+		.red-ball{
+			position: absolute;
+			background-color: red;
+			opacity: .7;
+			border-radius: 100%;
+			transition: .4s;
+
+			&:hover{
+			  opacity: 1;
+			}
+		}
+		.head{
+			border: 1px solid red;
+			position: absolute;
+		}
+		.quality{
+			display: inline-block;
+		}
+		.backimg{
+			max-height: 600px;
+		}
+		#result{
+			color: red;
+		}
+		.red{
+			color: #FF3300;
+		}
+		.green{
+			color: #00CC00;
+		}
+		.big{
+			font-size: 30px;
+			font-weight: bold;
+		}
+        </style>
+    </head>
+    <body>
+        <div align="center" style="margin: 100px auto;padding: 0;clear: both;">
+        	<h1 style="color: #EA8383;">人脸质量测评系统</h3>
+	        <br/>
+	        <br/>
+	        <br/>
+            <div class="wrap">
+                <img alt="" class="backimg" src="http://10.101.70.234/img/Desert.png">
+                </img>
+            </div>
+            <div class="quality">
+            </div>
+            <div id="result">
+            </div>
+            <form action="dy_upload_image.jspx" enctype="multipart/form-data" id="imgform" method="post">
+                <input id="uploadImage" name="filename" type="file"/>
+                <input id="imgbtn" onclick="gosubmit()" type="button" value="上传"/>
+            </form>
+        </div>
+    </body>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        function setRedBall(x, y, r) {
+		    var $wrap = $('.wrap');
+		    var radius = r;
+		    var w = radius * 2;
+		    var h = radius * 2;
+		    var x, y;
+		    $('<span class="red-ball">').css({
+		        left: x - radius,
+		        top: y - radius,
+		        width: w,
+		        height: h,
+		    }).appendTo($wrap);
+		}
+
+		function getObjectURL(file) {
+		    var url = null;
+		    if (window.createObjectURL != undefined) { // basic
+		        url = window.createObjectURL(file);
+		    } else if (window.URL != undefined) { // mozilla(firefox)
+		        url = window.URL.createObjectURL(file);
+		    } else if (window.webkitURL != undefined) { // webkit or chrome
+		        url = window.webkitURL.createObjectURL(file);
+		    }
+		    return url;
+		}
+
+		function base64(file, backData) {
+		    /*
+		     * file:input上传图片
+		     * backData：处理完成回调函数
+		     * */
+		    var reader = new FileReader();
+		    var image = new Image();
+		    var canvas = createCanvas();
+		    var ctx = canvas.getContext("2d");
+		    reader.onload = function() { // 文件加载完处理
+		        var result = this.result;
+		        image.onload = function() { // 图片加载完处理
+		            var imgScale = imgScaleW(1000, this.width, this.height);
+		            canvas.width = imgScale.width;
+		            canvas.height = imgScale.height;
+		            ctx.drawImage(image, 0, 0, imgScale.width, imgScale.height);
+		            var dataURL = canvas.toDataURL('image/jpeg'); // 图片base64
+		            ctx.clearRect(0, 0, imgScale.width, imgScale.height); // 清除画布
+		            backData(dataURL); //dataURL:处理成功返回的图片base64
+		        }
+		        image.src = result;
+		    };
+		    reader.readAsDataURL(file);
+		}
+
+		function createCanvas() { // 创建画布
+		    var canvas = document.getElementById('canvas');
+		    if (!canvas) {
+		        var canvasTag = document.createElement('canvas');
+		        canvasTag.setAttribute('id', 'canvas');
+		        canvasTag.setAttribute('style', 'display:none;'); //隐藏画布
+		        document.body.appendChild(canvasTag);
+		        canvas = document.getElementById('canvas');
+		    }
+		    return canvas;
+		}
+
+		function imgScaleW(maxWidth, width, height) {
+		    /* maxWidth:宽度或者高度最大值
+		     * width：宽度
+		     * height：高度
+		     * */
+		    var imgScale = {};
+		    var w = 0;
+		    var h = 0;
+		    if (width <= maxWidth && height <= maxWidth) { // 如果图片宽高都小于限制的最大值,不用缩放
+		        imgScale = {
+		            width: width,
+		            height: height
+		        }
+		    } else {
+		        if (width >= height) { // 如果图片宽大于高
+		            w = maxWidth;
+		            h = Math.ceil(maxWidth * height / width);
+		        } else { // 如果图片高大于宽
+		            h = maxWidth;
+		            w = Math.ceil(maxWidth * width / height);
+		        }
+		        imgScale = {
+		            width: w,
+		            height: h
+		        }
+		    }
+		    return imgScale;
+		}
+		$('#uploadImage').change(function() {
+		    $('.red-ball').remove();
+		    $('.head').remove();
+	        $('.quality').html('');
+		    $('.backimg').attr('src', getObjectURL($('#uploadImage').get(0).files[0]));
+		})
+
+		function gosubmit() {
+		    // var formdata = new FormData();
+		    var file = $('#uploadImage').get(0).files[0];
+		    if (file.size > 1024 * 500) {
+		        base64($('#uploadImage').get(0).files[0], function(base64Data) {
+		            //base64Data:处理成功返回的图片base64
+		            // $('.backimg').attr("src",base64Data);
+		            var formdata = new FormData();
+		            formdata.append('filename', convertBase64UrlToBlob(base64Data));
+		            uploadImg(formdata);
+		        });
+		    } else {
+		        var formdata = new FormData();
+		        formdata.append('filename', $('#uploadImage').get(0).files[0]);
+		        uploadImg(formdata);
+		    }
+		}
+		/**
+		 * 将以base64的图片url数据转换为Blob
+		 * @param urlData
+		 *            用url方式表示的base64图片数据
+		 */
+		function convertBase64UrlToBlob(urlData) {
+		    var arr = urlData.split(','),
+		        mime = arr[0].match(/:(.*?);/)[1],
+		        bstr = atob(arr[1]),
+		        n = bstr.length,
+		        u8arr = new Uint8Array(n);
+		    while (n--) {
+		        u8arr[n] = bstr.charCodeAt(n);
+		    }
+		    return new Blob([u8arr], {
+		        type: mime
+		    });
+		}
+
+		function uploadImg(formdata) {
+			$('#result').html('');
+			$('.quality').html('');
+		    $.ajax({
+		        url: 'http://10.101.70.234:8080/file/img/upload',
+		        type: 'post',
+		        contentType: false,
+		        data: formdata,
+		        processData: false,
+		        success: function(info) {
+		            if (info.data.result.err_code == -1) {
+		                $('#result').html('没有检测到人脸！');
+		                return;
+		            } else if (info.data.result.err_code == -2){
+		            	$('#result').html('检测到多张人脸！');
+		                // return;
+		            }
+	
+	                var r = info.data.result;
+	                $('.backimg').attr('src', 'http://10.101.70.234/img/done.jpg?t='+Date.parse(new Date()));
+	                // $('.red-ball').remove();
+	                // $('.head').remove();
+	                // $('<div class="head">').css({
+	                //     left: r.box.x,
+	                //     top: r.box.y,
+	                //     width: r.box.width,
+	                //     height: r.box.height,
+	                // }).appendTo($('.wrap'));
+	                // setRedBall(r.left_eye.x, r.left_eye.y, 5);
+	                // setRedBall(r.right_eye.x, r.right_eye.y, 5);
+	                // setRedBall(r.nose.x, r.nose.y, 5);
+	                // setRedBall(r.mouth_left.x, r.mouth_left.y, 5);
+	                // setRedBall(r.mouth_right.x, r.mouth_right.y, 5);
+	                // var text = '<br/><br/><br/>图片解析成功<br/><br/>左眼:   x:' + r.left_eye.x + ';   y:' + r.left_eye.y + '<br/>';
+	                // text += '右眼:   x:' + r.right_eye.x + ';   y:' + r.right_eye.y + '<br/>';
+	                // text += '鼻子:   x:' + r.nose.x + ';   y:' + r.nose.y + '<br/>';
+	                // text += '左嘴角:   x:' + r.mouth_left.x + ';   y:' + r.mouth_left.y + '<br/>';
+	                // text += '右嘴角:   x:' + r.mouth_right.x + ';   y:' + r.mouth_right.y + '<br/><br/><br/><br/><br/><br/>';
+	                // $('#result').html(text);
+
+	                text = '偏转角度:' + r.quality.yaw.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.yaw.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '俯仰角度:' + r.quality.pitch.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.pitch.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '滚转角度:' + r.quality.roll.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.roll.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '明亮度:' + r.quality.brightness.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.brightness.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '清晰度:' + r.quality.clarity.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.clarity.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '对比度:' + r.quality.contrast.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.contrast.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '位置:' + r.quality.pos.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.pos.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '大小:' + r.quality.size.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.size.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+					text += '表情:' + r.quality.emotion.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.emotion.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+					text += '遮挡:' + r.quality.occlusion.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.occlusion.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+	                text += '总得分:' + r.quality.total.value + '&nbsp;&nbsp;&nbsp;&nbsp';
+	                text += r.quality.total.pass?'<span class="green">合格</span><br/>':'<span class="red">不合格</span><br/>';
+
+	                if(r.pass){
+	                	text += '<br/><br/><span class="green big">图片合格</span><br/>'
+	                }else{
+	                	text += '<br/><br/><span class="red big">图片不合格</span><br/>'
+	                }
+	                $('.quality').html(text);
+		            
+		        },
+		        error: function(err) {
+		            console.log(err)
+		        }
+		    });
+		}
+    </script>
+</html>

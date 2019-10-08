@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>越界预警</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+
+    <style>
+        .img-box {
+            flex: 0 0 100%;
+        }
+        .img-box img {
+            max-width: 100%;
+        }
+        #canvas,
+        #canvas2 {
+            max-width: 1000px;
+        }
+    </style>
+</head>
+<body>
+<div class="face-wrap">
+    <h1>越界预警</h1>
+    <div class="btn-box">
+        <!-- <input class="in-txt" type="text" readonly>  style="display: none"-->
+        <input id="hiddenInput" type="file" hidden>
+        <button class="btn" id="chooseLocalFile" >选择文件</button>
+        <!--<button class="btn" id="camera">打开摄像头</button>-->
+        <button class="btn" id="cross" style="display: none;">隐藏分界线</button>
+         <button class="btn" id="confirm" style="display: none;">上  传</button>
+    </div>
+
+    <div class="view-box">
+        <div class="img-box">
+            <div class="canvas-box">
+                <canvas id="canvas"></canvas>
+                <canvas id="canvas2"></canvas>
+            </div>
+
+            <img id="image" src="http://10.101.70.234/img/Desert.png" alt="">
+        </div>
+    </div>
+</div>
+</body>
+<script src="jquery-3.3.1.min.js"></script>
+<script src="./exif.js"></script>
+<script src="crossing.js"></script>
+
+</html>
